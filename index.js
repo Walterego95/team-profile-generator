@@ -126,14 +126,14 @@ createTeam(manager_questions, "Manager").then(async(team_response) => {
                     team_html += "<div class='manager'>Manager Name:" + member.name + "</div>";
                     break;
                 case "Internal":
-                    // TODO complete html for Internal
+                    team_html += "<div class='internal'>Internal Name:" + member.name + "</div>";
                     break;  
                 case "Engineer":
-                    // TODO complete html for Engineer
+                    team_html += "<div class='engineer'>Engineer Name:" + member.name + "</div>";
                     break;                                
             }
         });
-    
+            console.log(team_html);
         fs.writeFile('./index.html', original_html.replace("REPLACE_ME", team_html), error => {
             if (error) {
                 console.error(error);
