@@ -1,3 +1,4 @@
+// constants required to create project...
 const inquirer = require('inquirer');
 const fs = require('fs');
 const Manager = require('./lib/Manager.js');
@@ -111,8 +112,10 @@ let internal_questions = [
     }
 ];
 
+// start the team as empty array...
 let team = [];
 
+// create team using input responses...
 createTeam(manager_questions, "Manager").then(async (team_response) => {
     // adding manager into team array...
     team.push(team_response.team_member);
@@ -126,19 +129,21 @@ createTeam(manager_questions, "Manager").then(async (team_response) => {
             case "Engineer":
                 team_response = await createTeam(engineer_questions, "Engineer");
                 break;
-        }
+        };
 
         // adding internal/engineer into team array...
         team.push(team_response.team_member);
-    }
+    };
 
+    // readfile function used for HTML template before printing...
     fs.readFile('./template.html', 'utf8', function (error, original_html) {
         if (error) {
             return console.error(error);
-        }
+        };
 
         let team_html = "";
 
+        // HTML compiler function to prepare the printing...
         team.forEach(member => {
             switch (member.constructor.name) {
                 case "Manager":
@@ -186,13 +191,14 @@ createTeam(manager_questions, "Manager").then(async (team_response) => {
                         "</div>";
                     break;
             }
-            console.log(team_html);
         });
+
+        // HTML printer function using fs.writefile...
         fs.writeFile('./index.html', original_html.replace("REPLACE_ME", team_html), error => {
             if (error) {
                 console.error(error);
                 return false;
-            }
+            };
 
             console.log("html is ready.");
         });
